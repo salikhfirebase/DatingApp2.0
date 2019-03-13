@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         facebookLogin.setReadPermissions("email")
 
         callbackManager = CallbackManager.Factory.create()
+        db = AppDatabase.getInstance(this) as AppDatabase
 
         LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult>{
 
@@ -127,7 +128,9 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 if (it>0) {
-                    Toast.makeText(this, "That's email already exist", Toast.LENGTH_SHORT).show()
+                    intent1 = Intent(this, QuestionnaireActivity::class.java)
+                    intent1.putExtra("action", "facebook_login")
+                    startActivity(intent1)
                 } else {
                     user.setEmail(email)
                     saveToDb(user)

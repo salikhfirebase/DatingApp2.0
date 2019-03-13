@@ -17,7 +17,7 @@ class User (
     @ColumnInfo(name = "status") private var status: String = "",
     @ColumnInfo(name = "other_data") private var otherData: String = "",
     @ColumnInfo(name = "make_clear") private var makeClear: String = "",
-    @ColumnInfo(name = "agreement") private var agreement: Boolean = false
+    @ColumnInfo(name = "agreement") private var agreement: String = "false"
 
 ) {
 
@@ -65,7 +65,7 @@ class User (
         return makeClear
     }
 
-    fun getAgreement(): Boolean {
+    fun getAgreement(): String {
         return agreement
     }
 
@@ -109,7 +109,7 @@ class User (
         this.makeClear = make_clear
     }
 
-    fun setAgreement(agreement: Boolean) {
+    fun setAgreement(agreement: String) {
         this.agreement = agreement
     }
 
