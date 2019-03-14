@@ -45,6 +45,18 @@ interface UserDao {
     @Query("UPDATE userData SET agreement = :agreement WHERE id = :id")
     fun updateAgreement(agreement: String, id: Int)
 
+    @Query("UPDATE userData SET picture = :userPic WHERE id = :id ")
+    fun updateUserPic(userPic:String, id:Int)
+
     @Query("SELECT COUNT(*) from userData WHERE email = :email ")
     fun isEmailInDb(email: String): Int
+
+    @Query("SELECT * FROM userData WHERE email = :email")
+    fun getUserFromDb(email: String): User
+
+    @Query("SELECT * FROM userData WHERE id = :id")
+    fun getUserFromDbById(id: Int): User
+
+    @Query("SELECT COUNT(*) from userData WHERE email = :email AND password = :password")
+    fun verifaicate(email: String, password: String): Int
 }

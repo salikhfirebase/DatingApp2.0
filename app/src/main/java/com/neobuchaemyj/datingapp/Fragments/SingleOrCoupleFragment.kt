@@ -16,6 +16,7 @@ import com.neobuchaemyj.datingapp.Model.User
 import com.neobuchaemyj.datingapp.QuestionnaireActivity
 
 import com.neobuchaemyj.datingapp.R
+import com.neobuchaemyj.datingapp.TakePictureActivity
 import com.neobuchaemyj.datingapp.UserProfileActivity
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -36,7 +37,7 @@ class SingleOrCoupleFragment : Fragment() {
     private var fragmentMain = androidx.fragment.app.Fragment()
     lateinit var radioGroup: RadioGroup
     lateinit var radioButton: RadioButton
-    lateinit var checkedHaveHouse: TextView
+    lateinit var checkedHaveHouse: CheckedTextView
     lateinit var checkedHaveCar: TextView
     lateinit var checkedHaveMoto: TextView
     lateinit var makeClear: EditText
@@ -61,9 +62,9 @@ class SingleOrCoupleFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_single_or_couple, container, false)
 
         radioGroup = view.findViewById(R.id.radioGroup)
-        checkedHaveHouse = view.findViewById(R.id.have_house)
-        checkedHaveCar = view.findViewById(R.id.have_car)
-        checkedHaveMoto = view.findViewById(R.id.have_motorcycle)
+        checkedHaveHouse = view.findViewById(R.id.have_house_text_view)
+        checkedHaveCar = view.findViewById(R.id.have_car_text_view)
+        checkedHaveMoto = view.findViewById(R.id.have_motorcycle_text_view)
         makeClear = view.findViewById(R.id.make_clear_edit_text)
         agreeCheckBox = view.findViewById(R.id.agree_checkbox)
         nextButton = view.findViewById(R.id.second_next_button)
@@ -82,15 +83,15 @@ class SingleOrCoupleFragment : Fragment() {
             radioButton = view.findViewById(radioGroup.checkedRadioButtonId)
             checkedRadioText = radioButton.text.toString()
 
-            checkedHaveHouse.setOnClickListener {
+            /*checkedHaveHouse.setOnClickListener {
                 houseCheked = if (houseCheked == "") {
-                    checkedHaveHouse.setBackgroundColor(Color.parseColor("#F5F5F5"))
+                    it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveHouse.text.toString() + ";"
                 } else {
-                    checkedHaveHouse.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    it.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     ""
                 }
-            }
+            }*/
             checkedHaveCar.setOnClickListener {
                 carCheked = if (carCheked == "") {
                     checkedHaveCar.setBackgroundColor(Color.parseColor("#F5F5F5"))
@@ -100,19 +101,22 @@ class SingleOrCoupleFragment : Fragment() {
                     ""
                 }
             }
+
             checkedHaveMoto.setOnClickListener {
                 motoCheked = if (motoCheked == "") {
-                    checkedHaveMoto.setBackgroundColor(Color.parseColor("#F5F5F5"))
+                    it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveMoto.text.toString() + ";"
                 } else {
-                    checkedHaveMoto.setBackgroundColor(Color.parseColor("#FFFFFF"))
+                    it.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     ""
                 }
             }
             userSet()
             if (userId != 0) {
                 saveToDb()
-                intent1 = Intent(this.requireContext(), UserProfileActivity::class.java)
+                intent1 = Intent(this.requireContext(), TakePictureActivity::class.java)
+                intent1.putExtra("log_in", "")
+                intent1.putExtra("reg", userId)
                 startActivity(intent1)
             } else {
                 Toast.makeText(this.requireContext(), "Wait", Toast.LENGTH_SHORT).show()
@@ -122,6 +126,7 @@ class SingleOrCoupleFragment : Fragment() {
 
         return view
     }
+
 
     @SuppressLint("CheckResult")
     fun userSet() {
@@ -162,6 +167,7 @@ class SingleOrCoupleFragment : Fragment() {
                 Log.d("SaveToDb", "Didn't saved in Registration Fragment", it)
             })
     }
+
 
 
 }

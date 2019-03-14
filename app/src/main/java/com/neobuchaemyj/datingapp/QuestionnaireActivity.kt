@@ -5,8 +5,10 @@ import android.os.Bundle
 import com.neobuchaemyj.datingapp.DB.AppDatabase
 import com.neobuchaemyj.datingapp.Fragments.MainInfoFragment
 import com.neobuchaemyj.datingapp.Fragments.RegistrationFragment
+import com.neobuchaemyj.datingapp.Fragments.SigInFragment
 
 class QuestionnaireActivity : AppCompatActivity() {
+
 
     private var fragmentMain = androidx.fragment.app.Fragment()
 
@@ -16,6 +18,14 @@ class QuestionnaireActivity : AppCompatActivity() {
 
         if (intent.getStringExtra("action") == "registration") {
             fragmentMain = RegistrationFragment()
+        }
+
+        if (intent.getStringExtra("action") == "facebook_login"){
+            fragmentMain = MainInfoFragment()
+        }
+
+        if (intent.getStringExtra("action") == "sign_in") {
+            fragmentMain = SigInFragment()
         }
         setFragment(fragmentMain)
     }

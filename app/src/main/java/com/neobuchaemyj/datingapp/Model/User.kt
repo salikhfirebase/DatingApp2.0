@@ -17,7 +17,8 @@ class User (
     @ColumnInfo(name = "status") private var status: String = "",
     @ColumnInfo(name = "other_data") private var otherData: String = "",
     @ColumnInfo(name = "make_clear") private var makeClear: String = "",
-    @ColumnInfo(name = "agreement") private var agreement: String = "false"
+    @ColumnInfo(name = "agreement") private var agreement: String = "false",
+    @ColumnInfo(name = "picture") private var userPic: String = ""
 
 ) {
 
@@ -69,6 +70,10 @@ class User (
         return agreement
     }
 
+    fun getUserPic(): String {
+        return userPic
+    }
+
     fun setEmail(email: String) {
         this.email = email
     }
@@ -111,6 +116,10 @@ class User (
 
     fun setAgreement(agreement: String) {
         this.agreement = agreement
+    }
+
+    fun setUserPic(userPic: String) {
+        this.userPic = userPic
     }
 
 }

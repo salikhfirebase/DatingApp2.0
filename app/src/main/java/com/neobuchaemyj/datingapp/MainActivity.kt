@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private var user = User()
     private lateinit var db: AppDatabase
     var userEmail: String = "didn't get"
+    var handler = Handler()
 
 
 
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         callbackManager = CallbackManager.Factory.create()
         db = AppDatabase.getInstance(this) as AppDatabase
 
+        LoginManager.getInstance().logOut()
+
         LoginManager.getInstance().registerCallback(callbackManager, object: FacebookCallback<LoginResult>{
 
             override fun onError(error: FacebookException?) {
@@ -64,19 +68,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onSuccess(result: LoginResult) {
-                isUserInDb(getUserEmail(result.accessToken))
+                getUserEmail(AccessToken.getCurrentAccessToken())
+                handler.postDelayed({ isUserInDb(userEmail) }, 1000)
             }
 
         })
 
         facebookLogin.setOnClickListener {
             if (AccessToken.getCurrentAccessToken() == null) {
-                Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun getUserEmail(token: AccessToken): String {
+    fun getUserEmail(token: AccessToken) {
 
         var request: GraphRequest = GraphRequest.newMeRequest(
             token
@@ -88,11 +93,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var parameters: Bundle = Bundle()
-        parameters.putString("email", "email")
+        var parameters = Bundle()
+        parameters.putString("fields", "email")
         request.parameters = parameters
         request.executeAsync()
-        return userEmail
     }
 
     fun onCreateAccButtonClick(v:View) {
@@ -128,8 +132,9 @@ class MainActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 if (it>0) {
-                    intent1 = Intent(this, QuestionnaireActivity::class.java)
-                    intent1.putExtra("action", "facebook_login")
+                    intent1 = Intent(this, UserProfileActivity::class.java)
+                    intent1.putExtra("log_in", email)
+                    intent1.putExtra("reg", 0)
                     startActivity(intent1)
                 } else {
                     user.setEmail(email)
@@ -140,5 +145,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+    }
+
+    fun onSignInButtonClick(v: View) {
+        intent1 = Intent(this, QuestionnaireActivity::class.java)
+        intent1.putExtra("action", "sign_in")
+        startActivity(intent1)
     }
 }

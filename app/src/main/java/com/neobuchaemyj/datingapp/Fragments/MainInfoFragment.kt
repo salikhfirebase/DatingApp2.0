@@ -97,16 +97,16 @@ class MainInfoFragment : Fragment() {
 
         height_seek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                height_text.text = seekBar.progress.toString()
-                userHeight = seekBar.progress.toString()
+                height_text.text = (seekBar.progress + 140).toString()
+                userHeight = (seekBar.progress + 140).toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                height_text.text = seekBar.progress.toString()
+                height_text.text = (seekBar.progress + 140).toString()
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                height_text.text = seekBar.progress.toString()
+                height_text.text = (seekBar.progress + 140).toString()
             }
 
         })
