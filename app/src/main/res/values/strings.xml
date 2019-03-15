@@ -159,4 +159,5 @@
     <string name="optional_text_view">* Optional</string>
     <string name="agreement_checkbox">I Agree to the</string>
     <string name="terms_and_conditions">Terms and Conditions of use</string>
+    <string name="select_from_gallery">Select from gallery</string>
 </resources>

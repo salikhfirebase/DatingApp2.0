@@ -37,7 +37,7 @@ class SingleOrCoupleFragment : Fragment() {
     private var fragmentMain = androidx.fragment.app.Fragment()
     lateinit var radioGroup: RadioGroup
     lateinit var radioButton: RadioButton
-    lateinit var checkedHaveHouse: CheckedTextView
+    lateinit var checkedHaveHouse: TextView
     lateinit var checkedHaveCar: TextView
     lateinit var checkedHaveMoto: TextView
     lateinit var makeClear: EditText
@@ -82,8 +82,18 @@ class SingleOrCoupleFragment : Fragment() {
         nextButton.setOnClickListener {
             radioButton = view.findViewById(radioGroup.checkedRadioButtonId)
             checkedRadioText = radioButton.text.toString()
+            otherData = houseCheked + carCheked + motoCheked
+            userSet()
+            if (userId != 0) {
+                saveToDb()
+                intent1 = Intent(this.requireContext(), TakePictureActivity::class.java)
+                startActivity(intent1)
+            } else {
+                Toast.makeText(this.requireContext(), "Wait", Toast.LENGTH_SHORT).show()
+            }
+        }
 
-            /*checkedHaveHouse.setOnClickListener {
+            checkedHaveHouse.setOnClickListener {
                 houseCheked = if (houseCheked == "") {
                     it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveHouse.text.toString() + ";"
@@ -91,7 +101,7 @@ class SingleOrCoupleFragment : Fragment() {
                     it.setBackgroundColor(Color.parseColor("#FFFFFF"))
                     ""
                 }
-            }*/
+            }
             checkedHaveCar.setOnClickListener {
                 carCheked = if (carCheked == "") {
                     checkedHaveCar.setBackgroundColor(Color.parseColor("#F5F5F5"))
@@ -111,18 +121,7 @@ class SingleOrCoupleFragment : Fragment() {
                     ""
                 }
             }
-            userSet()
-            if (userId != 0) {
-                saveToDb()
-                intent1 = Intent(this.requireContext(), TakePictureActivity::class.java)
-                intent1.putExtra("log_in", "")
-                intent1.putExtra("reg", userId)
-                startActivity(intent1)
-            } else {
-                Toast.makeText(this.requireContext(), "Wait", Toast.LENGTH_SHORT).show()
-            }
 
-        }
 
         return view
     }

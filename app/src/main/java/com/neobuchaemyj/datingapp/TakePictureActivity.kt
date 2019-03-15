@@ -16,7 +16,6 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import com.neobuchaemyj.datingapp.DB.AppDatabase
-import com.neobuchaemyj.datingapp.Fragments.TakePictureFragment
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,10 +29,13 @@ class TakePictureActivity : AppCompatActivity() {
     lateinit var nextButton: Button
     val PERMISSION_CODE = 1000
     var IMAGE_CAPTURE_CODE = 1001
-    lateinit var image_uri: Uri
+    var image_uri: Uri? = null
     lateinit var db: AppDatabase
     var userId = 0
     lateinit var intent1:Intent
+    val PICK_IMAGE = 1
+    var selectedImg: Uri? = null
+    lateinit var selectImgButton: Button
 
 
     @SuppressLint("CheckResult")
@@ -43,6 +45,7 @@ class TakePictureActivity : AppCompatActivity() {
 
         imgHolder = findViewById(R.id.got_picture)
         takePicButt = findViewById(R.id.take_pic_button)
+        selectImgButton = findViewById(R.id.select_from_button)
         nextButton = findViewById(R.id.last_next_button)
         db = AppDatabase.getInstance(this) as AppDatabase
 
@@ -54,6 +57,20 @@ class TakePictureActivity : AppCompatActivity() {
             }, {
                 Log.d("SaveToDb", "Didn't saved in Registration Fragment", it)
             })
+
+        selectImgButton.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (this.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED ||
+                    this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+                    var permissions = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else {
+                    getImgFormGallery()
+                }
+            } else {
+                getImgFormGallery()
+            }
+        }
 
         takePicButt.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -71,6 +88,8 @@ class TakePictureActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             intent1 = Intent(this, UserProfileActivity::class.java)
+            intent1.putExtra("log_in", "")
+            intent1.putExtra("reg", userId)
             startActivity(intent1)
         }
     }
@@ -87,12 +106,28 @@ class TakePictureActivity : AppCompatActivity() {
 
     }
 
+    fun getImgFormGallery() {
+        val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+        getIntent.type = "image/*"
+
+        val pickIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        pickIntent.type = "image/*"
+
+        val chooserIntent = Intent.createChooser(getIntent, "Select Image")
+        getIntent.type = "image/*"
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+
+        startActivityForResult(chooserIntent, PICK_IMAGE)
+    }
+
+
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
 
         when (requestCode) {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    openCamera()
+
                 } else {
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
                 }
@@ -104,15 +139,28 @@ class TakePictureActivity : AppCompatActivity() {
 
     @SuppressLint("CheckResult")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == IMAGE_CAPTURE_CODE) {
             imgHolder.setImageURI(image_uri)
+
+            Completable.fromAction { db.userDao().updateUserPic(image_uri.toString(), userId) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {
+                    Log.d("SaveToDb", "Didn't saved in Registration Fragment", it)
+                })
         }
-        Completable.fromAction { db.userDao().updateUserPic(image_uri.toString(), userId) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({}, {
-                Log.d("SaveToDb", "Didn't saved in Registration Fragment", it)
-            })
+        if (requestCode == PICK_IMAGE) {
+            selectedImg = data?.data
+            imgHolder.setImageURI(selectedImg)
+
+            Completable.fromAction { db.userDao().updateUserPic(selectedImg.toString(), userId) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {
+                    Log.d("SaveToDb", "Didn't saved in Registration Fragment", it)
+                })
+        }
+
     }
 
 }
