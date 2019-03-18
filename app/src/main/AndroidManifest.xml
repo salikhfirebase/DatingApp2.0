@@ -15,16 +15,20 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditUserInfoActivity">
+        <activity android:name=".EditUserInfoActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".TakePictureActivity">
+        <activity android:name=".TakePictureActivity"
+                  android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name=".UserProfileActivity"
                 android:label="@string/title_activity_user_profile"
-                android:theme="@style/AppTheme.NoActionBar">
+                android:theme="@style/AppTheme.NoActionBar"
+                android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".QuestionnaireActivity">
+        <activity android:name=".QuestionnaireActivity"
+                  android:screenOrientation="portrait">
         </activity>
 
         <meta-data
@@ -47,13 +51,26 @@
                 <data android:scheme="@string/fb_login_protocol_scheme"/>
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity
+                android:launchMode="singleTask"
+                android:name=".ui.SplashActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".ui.WebViewActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+
+        <activity android:name=".ui.ContentActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
     </application>
 
 </manifest>

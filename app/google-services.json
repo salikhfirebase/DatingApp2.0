@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1027278221791",
+    "firebase_url": "https://mazurapp-c3c4b.firebaseio.com",
+    "project_id": "mazurapp-c3c4b",
+    "storage_bucket": "mazurapp-c3c4b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027278221791:android:204962e95fa29329",
+        "android_client_info": {
+          "package_name": "com.neobuchaemyj.datingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027278221791-cimlj3dk5fln10jg75mkvqok54elkra6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neobuchaemyj.datingapp",
+            "certificate_hash": "d00e56eb8d8f7e5e2910ce78663a008799d8a912"
+          }
+        },
+        {
+          "client_id": "1027278221791-90niig77amhhsl54umpobenqvo8ptr0v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAppyiZ5ShHcWEWJrStC0TwrMxZ-Jbjbzo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027278221791-90niig77amhhsl54umpobenqvo8ptr0v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

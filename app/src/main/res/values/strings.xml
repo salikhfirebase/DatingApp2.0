@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DatingApp</string>
-    <string name="facebook_app_id">2216049995122615</string>
-    <string name="fb_login_protocol_scheme">fb2216049995122615</string>
+    <string name="facebook_app_id">827958454222476</string>
+    <string name="fb_login_protocol_scheme">fb827958454222476</string>
     <string name="att_result">Result</string>
     <string name="or_delimeter">or</string>
     <string name="create_account">Create account</string>
