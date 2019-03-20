@@ -118,7 +118,7 @@ class MainInfoFragment : Fragment() {
                 fragmentMain = SingleOrCoupleFragment()
                 setFragment(fragmentMain)
             } else {
-                Toast.makeText(this.requireContext(), "Wait", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Подождите", Toast.LENGTH_SHORT).show()
             }
         }
 

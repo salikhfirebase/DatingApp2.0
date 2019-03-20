@@ -89,7 +89,7 @@ class SingleOrCoupleFragment : Fragment() {
                 intent1 = Intent(this.requireContext(), TakePictureActivity::class.java)
                 startActivity(intent1)
             } else {
-                Toast.makeText(this.requireContext(), "Wait", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Подождите", Toast.LENGTH_SHORT).show()
             }
         }
 

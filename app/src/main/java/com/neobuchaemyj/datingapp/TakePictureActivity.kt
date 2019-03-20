@@ -129,7 +129,7 @@ class TakePictureActivity : AppCompatActivity() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 } else {
-                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Вы не дали доступ", Toast.LENGTH_SHORT).show()
                 }
             }
         }

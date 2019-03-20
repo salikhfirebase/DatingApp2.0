@@ -20,6 +20,8 @@ import com.facebook.login.widget.LoginButton
 import com.neobuchaemyj.datingapp.DB.AppDatabase
 import com.neobuchaemyj.datingapp.Fragments.MainInfoFragment
 import com.neobuchaemyj.datingapp.Model.User
+import com.yandex.metrica.YandexMetrica
+import com.yandex.metrica.YandexMetricaConfig
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -51,6 +53,9 @@ class MainActivity : AppCompatActivity() {
         facebookLogin = findViewById(R.id.facebook_login_button)
 
         facebookLogin.setReadPermissions("email")
+        var config = YandexMetricaConfig.newConfigBuilder("f15bb487-b8dd-4c68-af75-1a5f379d5e03").build()
+        YandexMetrica.activate(this, config)
+        YandexMetrica.enableActivityAutoTracking(this.application)
 
         callbackManager = CallbackManager.Factory.create()
         db = AppDatabase.getInstance(this) as AppDatabase
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancel() {
-                Toast.makeText(this@MainActivity, "Login cancelled", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Авторизация отменена", Toast.LENGTH_SHORT).show()
             }
 
             override fun onSuccess(result: LoginResult) {
@@ -152,4 +157,5 @@ class MainActivity : AppCompatActivity() {
         intent1.putExtra("action", "sign_in")
         startActivity(intent1)
     }
+
 }

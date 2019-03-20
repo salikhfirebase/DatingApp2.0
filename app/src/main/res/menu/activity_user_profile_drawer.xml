@@ -7,31 +7,31 @@
         <item
                 android:id="@+id/nav_messages"
                 android:icon="@drawable/new_post_24"
-                android:title="Messages"/>
+                android:title="Сообщения"/>
         <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/profile_24"
-                android:title="Your profile"/>
+                android:title="Профиль"/>
         <item
                 android:id="@+id/nav_free_stars"
                 android:icon="@drawable/free_stars_24"
-                android:title="Free stars"/>
+                android:title="Свободные звезды"/>
         <item
                 android:id="@+id/nav_chat"
                 android:icon="@drawable/char_24"
-                android:title="Chat"/>
+                android:title="Чат"/>
         <item
                 android:id="@+id/nav_help"
                 android:icon="@drawable/help_24"
-                android:title="Help"/>
+                android:title="Помощь"/>
         <item
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/feedback_24"
-                android:title="Feedback"/>
+                android:title="Обратная связь"/>
         <item
                 android:id="@+id/nav_sign_out"
                 android:icon="@drawable/sign_out_24"
-                android:title="Sign out"/>
+                android:title="Выйти"/>
     </group>
 
 </menu>

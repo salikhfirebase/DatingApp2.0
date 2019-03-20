@@ -79,7 +79,7 @@ class RegistrationFragment : Fragment() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 if (it>0) {
-                    Toast.makeText(this.requireContext(), "That's email already exist", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), "Адрес уже занят", Toast.LENGTH_SHORT).show()
                 } else {
                     user.setEmail(email)
                     user.setPassword(password)

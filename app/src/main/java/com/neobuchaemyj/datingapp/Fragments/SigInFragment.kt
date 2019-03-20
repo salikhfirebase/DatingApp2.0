@@ -69,7 +69,7 @@ class SigInFragment : Fragment() {
                     intent1.putExtra("reg", 0)
                     startActivity(intent1)
                 } else {
-                    Toast.makeText(this.requireContext(), "Incorrect login or password", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this.requireContext(), "Неправильный логин или пароль", Toast.LENGTH_SHORT).show()
                 }
             }
 

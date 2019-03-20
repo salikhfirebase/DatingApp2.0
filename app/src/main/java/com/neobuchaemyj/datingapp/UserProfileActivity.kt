@@ -13,6 +13,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.Fragments.OtherFragment
 import com.neobuchaemyj.datingapp.Fragments.PolicyFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import io.reactivex.Observable
@@ -55,6 +56,8 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         userPic = navigationView.getHeaderView(0).findViewById(R.id.nav_header_pic)
         db = AppDatabase.getInstance(this) as AppDatabase
         intent1 = Intent(this, EditUserInfoActivity::class.java)
+        fragmentMain = OtherFragment()
+        setFragment(fragmentMain)
 
         if (userId != 0) {
             Observable.fromCallable{ db.userDao().getUserFromDbById(userId) }
@@ -101,6 +104,7 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         when (item.itemId) {
             R.id.action_settings -> return true
             else -> return super.onOptionsItemSelected(item)
@@ -111,19 +115,23 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_messages -> {
-                // Handle the camera action
+                fragmentMain = OtherFragment()
+                setFragment(fragmentMain)
             }
             R.id.nav_profile -> {
                 startActivity(intent1)
             }
             R.id.nav_chat -> {
-
+                fragmentMain = OtherFragment()
+                setFragment(fragmentMain)
             }
             R.id.nav_free_stars -> {
-
+                fragmentMain = OtherFragment()
+                setFragment(fragmentMain)
             }
             R.id.nav_feedback -> {
-
+                fragmentMain = OtherFragment()
+                setFragment(fragmentMain)
             }
             R.id.nav_help -> {
                 fragmentMain = PolicyFragment()
@@ -132,7 +140,7 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
 
             R.id.nav_sign_out -> {
                 menuIntent = Intent(this, MainActivity::class.java)
-                Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Вы успешно вышли", Toast.LENGTH_SHORT).show()
                 startActivity(menuIntent)
             }
         }

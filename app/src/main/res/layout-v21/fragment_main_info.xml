@@ -83,7 +83,7 @@
                 <Spinner
                         android:id="@+id/years_spinner"
                         android:entries="@array/years"
-                        android:layout_width="132dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
             </LinearLayout>
