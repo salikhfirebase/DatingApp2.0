@@ -133,9 +133,9 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
             val pickIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             pickIntent.type = "image/*"
             val chooserIntent = Intent.createChooser(contentSelectionIntent, "Select Image")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent, takePictureIntent))
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
 
-            startActivityForResult(chooserIntent, 1)
+            startActivityForResult(pickIntent, 1)
             return true
         }
     }
