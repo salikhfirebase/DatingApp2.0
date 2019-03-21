@@ -57,7 +57,8 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
 
         configureWebView()
 
-        webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
+            //webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
+            webView.loadUrl("https://en.imgbb.com/")
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -126,13 +127,15 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
             if (takePictureIntent != null) {
                 intentArray = arrayOf(takePictureIntent)
             } else {
-                intentArray = arrayOfNulls<Intent>(2)
+                intentArray = arrayOfNulls(2)
             }
-            val chooserIntent = Intent(Intent.ACTION_CHOOSER)
-            chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
-            chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser")
-            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
-            startActivityForResult(Intent.createChooser(chooserIntent, "Select images"), 1)
+
+            val pickIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            pickIntent.type = "image/*"
+            val chooserIntent = Intent.createChooser(contentSelectionIntent, "Select Image")
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent, takePictureIntent))
+
+            startActivityForResult(chooserIntent, 1)
             return true
         }
     }
