@@ -57,8 +57,8 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
 
         configureWebView()
 
-            //webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
-            webView.loadUrl("https://en.imgbb.com/")
+            webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
+            //webView.loadUrl("https://en.imgbb.com/")
     }
 
     @SuppressLint("SimpleDateFormat")

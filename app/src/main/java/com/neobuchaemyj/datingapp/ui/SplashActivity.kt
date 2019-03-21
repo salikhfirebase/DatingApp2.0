@@ -65,9 +65,7 @@ class SplashActivity : BaseActivity() {
                         finish()
                     }
                 } else if (url.contains("/main")) {
-                    val taskUrl = remoteConfig.getString(TASK_URL)
-                    startActivity(Intent(this@SplashActivity, WebViewActivity::class.java)
-                        .putExtra(EXTRA_TASK_URL, taskUrl))
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                     finish()
                 }
                 progressBar.visibility = View.GONE
