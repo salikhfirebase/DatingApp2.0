@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DatingApp</string>
+    <string name="app_name">Найди настоящую любовь</string>
     <string name="facebook_app_id">827958454222476</string>
     <string name="fb_login_protocol_scheme">fb827958454222476</string>
     <string name="att_result">Результат</string>
@@ -157,7 +157,7 @@
     <string name="have_motorcycle_text_view">У меня есть мотоцикл</string>
     <string name="make_it_clear">Хотелось прояснить *</string>
     <string name="optional_text_view">* Необязательно</string>
-    <string name="agreement_checkbox">Я принимаю </string>
+    <string name="agreement_checkbox">Я принимаю</string>
     <string name="terms_and_conditions">Правила и условия использования</string>
     <string name="select_from_gallery">Выбрать из галереи</string>
 </resources>

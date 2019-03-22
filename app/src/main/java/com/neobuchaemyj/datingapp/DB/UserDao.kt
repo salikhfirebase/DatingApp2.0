@@ -48,6 +48,9 @@ interface UserDao {
     @Query("UPDATE userData SET picture = :userPic WHERE id = :id ")
     fun updateUserPic(userPic:String, id:Int)
 
+    @Query("UPDATE userData SET lookFor = :lookFor WHERE id= :id")
+    fun updateLookFor(lookFor: String, id:Int)
+
     @Query("SELECT COUNT(*) from userData WHERE email = :email ")
     fun isEmailInDb(email: String): Int
 

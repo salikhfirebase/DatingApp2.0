@@ -18,7 +18,8 @@ class User (
     @ColumnInfo(name = "other_data") private var otherData: String = "",
     @ColumnInfo(name = "make_clear") private var makeClear: String = "",
     @ColumnInfo(name = "agreement") private var agreement: String = "false",
-    @ColumnInfo(name = "picture") private var userPic: String = ""
+    @ColumnInfo(name = "picture") private var userPic: String = "",
+    @ColumnInfo(name = "lookFor") private var lookFor: String = ""
 
 ) {
 
@@ -74,6 +75,10 @@ class User (
         return userPic
     }
 
+    fun getLookFor(): String {
+        return lookFor
+    }
+
     fun setEmail(email: String) {
         this.email = email
     }
@@ -120,6 +125,10 @@ class User (
 
     fun setUserPic(userPic: String) {
         this.userPic = userPic
+    }
+
+    fun setLookFor(lookFor: String) {
+        this.lookFor = lookFor
     }
 
 }

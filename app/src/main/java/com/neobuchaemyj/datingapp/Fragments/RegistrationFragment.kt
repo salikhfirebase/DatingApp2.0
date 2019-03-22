@@ -52,7 +52,11 @@ class RegistrationFragment : Fragment() {
         create_acc_button = view.findViewById(R.id.reg_button)
 
         create_acc_button.setOnClickListener {
-            isUserInDb(email_edit_text.text.toString(), reg_pass_edit_text.text.toString())
+            if ((pass_edit_text.text.toString() == "") || (email_edit_text.text.toString() == "")) {
+                Toast.makeText(this.requireContext(), "Заполните поля", Toast.LENGTH_SHORT).show()
+            } else {
+                isUserInDb(email_edit_text.text.toString(), pass_edit_text.text.toString())
+            }
         }
 
         return view
