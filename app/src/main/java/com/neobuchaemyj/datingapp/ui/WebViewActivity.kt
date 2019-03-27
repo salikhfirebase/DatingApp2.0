@@ -3,7 +3,6 @@ package com.neobuchaemyj.datingapp.ui
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
-import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,9 +15,8 @@ import android.util.Log
 import android.view.View
 import android.webkit.*
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.mazur.app.EXTRA_TASK_URL
+import com.neobuchaemyj.datingapp.EXTRA_TASK_URL
 import com.neobuchaemyj.datingapp.R
 import com.neobuchaemyj.datingapp._core.BaseActivity
 import im.delight.android.webview.AdvancedWebView
@@ -28,7 +26,6 @@ import java.io.IOException
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.jar.Manifest
 
 
 /**

@@ -1,4 +1,4 @@
-package com.mazur.app
+package com.neobuchaemyj.datingapp
 
 
 /**
@@ -10,6 +10,9 @@ const val TASK_URL = "task_url"
 const val SHOW_IN = "show_in"
 const val BROWSER = "browser"
 const val WEB_VIEW = "web_view"
+const val TASK_URL_25 = "less_twenty_five"
+const val TASK_URL_25_29 = "twenty_five_nine"
+const val TASK_URL_30 = "more_twenty_nine"
 
 // EXTRAS
 const val EXTRA_TASK_URL = "extra_task_url"

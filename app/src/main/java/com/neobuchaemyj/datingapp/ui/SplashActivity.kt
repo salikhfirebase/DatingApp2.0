@@ -1,16 +1,16 @@
 package com.neobuchaemyj.datingapp.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.mazur.app.*
-import com.neobuchaemyj.datingapp.MainActivity
-import com.neobuchaemyj.datingapp.R
+import com.neobuchaemyj.datingapp.*
 import com.neobuchaemyj.datingapp._core.BaseActivity
 import kotlinx.android.synthetic.main.activity_web_view.*
 
@@ -49,7 +49,7 @@ class SplashActivity : BaseActivity() {
 
                     if (value == WEB_VIEW) {
                         startActivity(
-                            Intent(this@SplashActivity, WebViewActivity::class.java)
+                            Intent(this@SplashActivity, ChooseAgeActivity::class.java)
                                 .putExtra(EXTRA_TASK_URL, taskUrl)
                         )
                         finish()
