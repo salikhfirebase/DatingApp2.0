@@ -14,5 +14,12 @@ const val TASK_URL_25 = "less_twenty_five"
 const val TASK_URL_25_29 = "twenty_five_nine"
 const val TASK_URL_30 = "more_twenty_nine"
 
+const val CONVERSION_DATA = "conversion_data"
+const val CONVERSION_L = "l"
+const val CONVERSION_OFFER = "offer_id"
+const val CONVERSION_SUB = "sub"
+const val CONVERSION_URL = "url"
+const val CONVERSION_TID = "tid"
+
 // EXTRAS
 const val EXTRA_TASK_URL = "extra_task_url"

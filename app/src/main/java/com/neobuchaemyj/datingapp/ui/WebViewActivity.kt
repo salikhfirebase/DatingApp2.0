@@ -20,8 +20,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
-import com.neobuchaemyj.datingapp.EXTRA_TASK_URL
-import com.neobuchaemyj.datingapp.R
+import com.neobuchaemyj.datingapp.*
 import com.neobuchaemyj.datingapp._core.BaseActivity
 import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_web_view.*
@@ -44,6 +43,7 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
     val PERMISSION_CODE = 1000
     var size: Long = 0
 
+
     override fun getContentView(): Int = R.layout.activity_web_view
 
     override fun initUI() {
@@ -51,14 +51,28 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
         progressBar = progress_bar
     }
 
+    private lateinit var conversionUrl: String
+    private lateinit var conversionL: String
+    private lateinit var conversionOffer: String
+    private lateinit var conversionSub: String
+    private lateinit var conversionTid: String
+
     override fun setUI() {
+        getValuesFromDatabase({
+            val values = it.child(CONVERSION_DATA)
+            conversionUrl = values.child(CONVERSION_URL).value as String
+            conversionL = values.child(CONVERSION_L).value as String
+            conversionOffer = values.child(CONVERSION_OFFER).value as String
+            conversionSub = values.child(CONVERSION_SUB).value as String
+            conversionTid = values.child(CONVERSION_TID).value as String
+        })
         logEvent("web-view-screen")
         progressBar.visibility = View.VISIBLE
 
         configureWebView()
 
-            webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
-            //webView.loadUrl("https://en.imgbb.com/")
+        webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
+        //webView.loadUrl("https://en.imgbb.com/")
         // Just test TODO: replace
 //        webView.loadUrl("https://kasfigo.club/0a52ed5/postback?sub_id={sub1}&tid={transactionid}&status={status}&payout={sum}&currency={currency}&offer_name={offer_name}&lead_status=2&sale_status=1&rejected_status=3&ios_idfa={ios_idfa}&android_id={android_id}&from=alfaleads.ru")
     }
@@ -75,13 +89,19 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
         )
     }
 
-    fun verifyStoragePermissions(activity:Activity) {
+    fun verifyStoragePermissions(activity: Activity) {
 
-        var writePermission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        var readPermission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        var writePermission =
+            ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        var readPermission =
+            ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.READ_EXTERNAL_STORAGE)
         var cameraPermission = ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.CAMERA)
 
-        var permission = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        var permission = arrayOf(
+            android.Manifest.permission.CAMERA,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        )
         if (writePermission != PackageManager.PERMISSION_GRANTED || readPermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity, permission, PERMISSION_CODE)
         }
@@ -154,13 +174,8 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 // TODO: add values to determine if url is for conversion response, you can add these values to firebase database
-                url?.let {
-                    if (it.contains("https://kasfigo.club/") &&
-                        it.contains("sub1") &&
-                        it.contains("offer_id=2682") &&
-                        it.contains("l=1545818932") &&
-                        it.contains("tid")
-                    ) {
+                url?.let { urlSafe ->
+                    if (checkIfUrlIsSuitable(urlSafe)) {
                         val uri = Uri.parse(url)
                         val args = uri.queryParameterNames
                         val bundle = Bundle()
@@ -179,9 +194,17 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
         verifyStoragePermissions(this)
     }
 
+    private fun checkIfUrlIsSuitable(urlSafe: String): Boolean {
+        return urlSafe.contains(conversionUrl) &&
+                urlSafe.contains(conversionOffer) &&
+                urlSafe.contains(conversionSub) &&
+                urlSafe.contains(conversionL) &&
+                urlSafe.contains(conversionTid)
+    }
+
 
     override fun onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack()
         } else {
             super.onBackPressed()
@@ -199,42 +222,31 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
     }
 
 
-
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
-        if (data != null || mCameraPhotoPath != null)
-        {
+        if (data != null || mCameraPhotoPath != null) {
             var count = 0 //fix fby https://github.com/nnian
-            var images:ClipData? = null
-            try
-            {
+            var images: ClipData? = null
+            try {
                 images = data?.clipData
-            }
-            catch (e:Exception) {
+            } catch (e: Exception) {
                 Log.e("Error!", e.localizedMessage)
             }
-            if (images == null && data != null && data.dataString != null)
-            {
+            if (images == null && data != null && data.dataString != null) {
                 count = data.dataString.length
-            }
-            else if (images != null)
-            {
-                count = images.getItemCount()
+            } else if (images != null) {
+                count = images.itemCount
             }
             var results = arrayOfNulls<Uri>(count)
             // Check that the response is a good one
-            if (resultCode === Activity.RESULT_OK)
-            {
-                if (size !== 0L)
-                {
+            if (resultCode === Activity.RESULT_OK) {
+                if (size !== 0L) {
                     // If there is not data, then we may have taken a photo
-                    if (mCameraPhotoPath != null)
-                    {
+                    if (mCameraPhotoPath != null) {
                         results = arrayOf(Uri.parse(mCameraPhotoPath))
                     }
-                }
-                else if (data != null) {
+                } else if (data != null) {
                     if (data.clipData == null) {
                         results = arrayOf(Uri.parse(data.dataString))
                     } else {

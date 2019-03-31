@@ -3,11 +3,10 @@ package com.neobuchaemyj.datingapp
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.neobuchaemyj.datingapp.DB.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import io.reactivex.Completable

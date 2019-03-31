@@ -2,20 +2,17 @@ package com.neobuchaemyj.datingapp.Fragments
 
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.neobuchaemyj.datingapp.DB.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
-
 import com.neobuchaemyj.datingapp.R
-import com.neobuchaemyj.datingapp.TakePictureActivity
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

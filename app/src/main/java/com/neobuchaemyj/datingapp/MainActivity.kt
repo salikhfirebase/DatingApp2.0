@@ -2,23 +2,20 @@ package com.neobuchaemyj.datingapp
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import butterknife.BindView
+import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.facebook.*
 import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
 import com.neobuchaemyj.datingapp.DB.AppDatabase
-import com.neobuchaemyj.datingapp.Fragments.MainInfoFragment
 import com.neobuchaemyj.datingapp.Model.User
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
@@ -26,7 +23,6 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 

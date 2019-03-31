@@ -1,8 +1,7 @@
 package com.neobuchaemyj.datingapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import androidx.appcompat.app.AppCompatActivity
 import com.neobuchaemyj.datingapp.Fragments.MainInfoFragment
 import com.neobuchaemyj.datingapp.Fragments.RegistrationFragment
 import com.neobuchaemyj.datingapp.Fragments.SigInFragment
