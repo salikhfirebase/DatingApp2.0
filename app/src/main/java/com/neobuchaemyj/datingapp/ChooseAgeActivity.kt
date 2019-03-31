@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.firebase.database.DataSnapshot
 import com.neobuchaemyj.datingapp._core.BaseActivity
 import com.neobuchaemyj.datingapp.ui.WebViewActivity
 
@@ -18,9 +15,9 @@ class ChooseAgeActivity : BaseActivity() {
 
     lateinit var radioGroup: RadioGroup
     lateinit var radioButton: RadioButton
-    lateinit var toWebViewButton: Button
+    lateinit var toWebViewButton: ImageView
     lateinit var intent1: Intent
-    private lateinit var remoteConfig1: FirebaseRemoteConfig
+    private lateinit var dataSnapshot: DataSnapshot
     val APP_REFERENCES = "mysettings"
     val APP_REFERENCES_AGE = "empty"
     lateinit var mSettings: SharedPreferences
@@ -30,12 +27,12 @@ class ChooseAgeActivity : BaseActivity() {
 
     override fun setUI() {
 
-        fetchRemoteConfig({
-            remoteConfig1 = it
+        getValuesFromDatabase({
+            dataSnapshot = it
 
-            val taskUrl25 = remoteConfig1.getString(TASK_URL_25)
-            val taskUrl2529 = remoteConfig1.getString(TASK_URL_25_29)
-            val taskUrl30 = remoteConfig1.getString(TASK_URL_30)
+            val taskUrl25 = dataSnapshot.child(TASK_URL_25).value as String
+            val taskUrl2529 = dataSnapshot.child(TASK_URL_25_29).value as String
+            val taskUrl30 = dataSnapshot.child(TASK_URL_30).value as String
 
             if (mSettings.contains(APP_REFERENCES_AGE)) {
                 sp = mSettings.getString(APP_REFERENCES_AGE, "empty")

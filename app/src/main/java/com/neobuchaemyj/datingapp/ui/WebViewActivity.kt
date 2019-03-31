@@ -9,11 +9,15 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.webkit.*
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
 import com.neobuchaemyj.datingapp.EXTRA_TASK_URL
@@ -23,7 +27,6 @@ import im.delight.android.webview.AdvancedWebView
 import kotlinx.android.synthetic.main.activity_web_view.*
 import java.io.File
 import java.io.IOException
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -56,6 +59,8 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
 
             webView.loadUrl(intent.getStringExtra(EXTRA_TASK_URL))
             //webView.loadUrl("https://en.imgbb.com/")
+        // Just test TODO: replace
+//        webView.loadUrl("https://kasfigo.club/0a52ed5/postback?sub_id={sub1}&tid={transactionid}&status={status}&payout={sum}&currency={currency}&offer_name={offer_name}&lead_status=2&sale_status=1&rejected_status=3&ios_idfa={ios_idfa}&android_id={android_id}&from=alfaleads.ru")
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -145,26 +150,29 @@ class WebViewActivity : BaseActivity(), AdvancedWebView.Listener {
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
         webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.builtInZoomControls = true
-        webView.settings.displayZoomControls = false
-        webView.settings.setRenderPriority(WebSettings.RenderPriority.HIGH)
-        webView.settings.setAppCacheEnabled(true)
-        webView.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK
-        webView.settings.domStorageEnabled = true
-        webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.NARROW_COLUMNS
-        webView.settings.useWideViewPort = true
-        webView.settings.savePassword = true
-        webView.settings.saveFormData = true
-        webView.settings.setEnableSmoothTransition(true)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-        } else {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
-        }
         webView.webChromeClient = PQChromeClient()
         webView.webViewClient = object : WebViewClient() {
-            override fun onPageFinished(view: WebView, url: String) {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                // TODO: add values to determine if url is for conversion response, you can add these values to firebase database
+                url?.let {
+                    if (it.contains("https://kasfigo.club/") &&
+                        it.contains("sub1") &&
+                        it.contains("offer_id=2682") &&
+                        it.contains("l=1545818932") &&
+                        it.contains("tid")
+                    ) {
+                        val uri = Uri.parse(url)
+                        val args = uri.queryParameterNames
+                        val bundle = Bundle()
+
+                        args.forEach { key ->
+                            bundle.putString(key, uri.getQueryParameter(key))
+                        }
+
+                        logEvent("conversion_response", bundle)
+                    }
+                }
+
                 progressBar.visibility = View.GONE
             }
         }

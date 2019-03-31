@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "662479569173-qhc91a5drvf7kfcv3kfafro8vjb319ut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.neobuchaemyj.datingapp",
+            "certificate_hash": "bfcc2e6500953c4be0fc0049ff09640e5d592a36"
+          }
+        },
+        {
           "client_id": "662479569173-2v3vh5sio4ngimf1p12tpsce3ch3fpmg.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "662479569173-2v3vh5sio4ngimf1p12tpsce3ch3fpmg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
