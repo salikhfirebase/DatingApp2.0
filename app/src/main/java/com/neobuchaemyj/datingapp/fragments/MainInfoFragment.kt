@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
 import android.annotation.SuppressLint
@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import com.neobuchaemyj.datingapp.R
 import io.reactivex.Completable
@@ -19,8 +19,6 @@ import io.reactivex.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -29,23 +27,23 @@ private const val ARG_PARAM2 = "param2"
 class MainInfoFragment : Fragment() {
 
     private var fragmentMain = androidx.fragment.app.Fragment()
-    lateinit var nick_edit: EditText
-    lateinit var years_spinner: Spinner
-    lateinit var days_spinner: Spinner
-    lateinit var months_spinner: Spinner
-    lateinit var race_spinner: Spinner
-    lateinit var height_seek: SeekBar
-    lateinit var weight_seek: SeekBar
-    lateinit var height_text: TextView
-    lateinit var weight_text: TextView
-    lateinit var nextButton: Button
+    private lateinit var nickEdit: EditText
+    private lateinit var yearsSpinner: Spinner
+    private lateinit var daysSpinner: Spinner
+    private lateinit var monthsSpinner: Spinner
+    private lateinit var raceSpinner: Spinner
+    private lateinit var heightSeek: SeekBar
+    private lateinit var weightSeek: SeekBar
+    lateinit var heightText: TextView
+    lateinit var weightText: TextView
+    private lateinit var nextButton: Button
     lateinit var db: AppDatabase
 
     var user = User()
-    var birthDate = ""
+    private var birthDate = ""
     var userHeight = ""
     var userWeight = ""
-    var userId = 0
+    private var userId = 0
 
 
     @SuppressLint("CheckResult")
@@ -54,17 +52,17 @@ class MainInfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_main_info, container, false)
+        val view = inflater.inflate(R.layout.fragment_main_info, container, false)
 
-        nick_edit = view.findViewById(R.id.nick_edit_text)
-        years_spinner = view.findViewById(R.id.years_spinner)
-        days_spinner = view.findViewById(R.id.days_spinner)
-        months_spinner = view.findViewById(R.id.months_spinner)
-        race_spinner = view.findViewById(R.id.race_spinner)
-        height_seek = view.findViewById(R.id.height_seek_bar)
-        weight_seek = view.findViewById(R.id.weight_seek_bar)
-        height_text = view.findViewById(R.id.textView5)
-        weight_text = view.findViewById(R.id.textView8)
+        nickEdit = view.findViewById(R.id.nick_edit_text)
+        yearsSpinner = view.findViewById(R.id.years_spinner)
+        daysSpinner = view.findViewById(R.id.days_spinner)
+        monthsSpinner = view.findViewById(R.id.months_spinner)
+        raceSpinner = view.findViewById(R.id.race_spinner)
+        heightSeek = view.findViewById(R.id.height_seek_bar)
+        weightSeek = view.findViewById(R.id.weight_seek_bar)
+        heightText = view.findViewById(R.id.textView5)
+        weightText = view.findViewById(R.id.textView8)
         nextButton = view.findViewById(R.id.first_next_button)
         db = AppDatabase.getInstance(this.requireContext()) as AppDatabase
         Observable.fromCallable { db.userDao().getLastId() }
@@ -78,34 +76,34 @@ class MainInfoFragment : Fragment() {
 
 
 
-        weight_seek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        weightSeek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
                 userWeight = seekBar.progress.toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
             }
 
         })
 
-        height_seek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        heightSeek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
                 userHeight = (seekBar.progress + 140).toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
             }
 
         })
@@ -126,10 +124,10 @@ class MainInfoFragment : Fragment() {
 
     @SuppressLint("CheckResult")
     fun userSet() {
-        birthDate = days_spinner.selectedItem.toString() + "/" + months_spinner.selectedItem.toString() + "/" + years_spinner.selectedItem.toString()
-        user.setNick(nick_edit.text.toString())
+        birthDate = daysSpinner.selectedItem.toString() + "/" + monthsSpinner.selectedItem.toString() + "/" + yearsSpinner.selectedItem.toString()
+        user.setNick(nickEdit.text.toString())
         user.setBirth(birthDate)
-        user.setRace(race_spinner.selectedItem.toString())
+        user.setRace(raceSpinner.selectedItem.toString())
         user.setHeight(userHeight)
         user.setWeight(userWeight)
 
@@ -170,7 +168,7 @@ class MainInfoFragment : Fragment() {
             })
     }
 
-    fun setFragment(f: androidx.fragment.app.Fragment) {
+    private fun setFragment(f: androidx.fragment.app.Fragment) {
 
         val fm: androidx.fragment.app.FragmentManager = this.requireActivity().supportFragmentManager
         val ft: androidx.fragment.app.FragmentTransaction = fm.beginTransaction()

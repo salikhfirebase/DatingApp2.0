@@ -12,9 +12,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
-import com.neobuchaemyj.datingapp.DB.AppDatabase
-import com.neobuchaemyj.datingapp.Fragments.OtherFragment
-import com.neobuchaemyj.datingapp.Fragments.PolicyFragment
+import com.neobuchaemyj.datingapp.db.AppDatabase
+import com.neobuchaemyj.datingapp.fragments.OtherFragment
+import com.neobuchaemyj.datingapp.fragments.PolicyFragment
 import de.hdodenhof.circleimageview.CircleImageView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,14 +25,14 @@ import kotlinx.android.synthetic.main.app_bar_user_profile.*
 class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     lateinit var db: AppDatabase
-    var userId = 0
-    var userEmail = ""
-    lateinit var userName: TextView
-    lateinit var userPic: CircleImageView
-    lateinit var navigationView: NavigationView
+    private var userId = 0
+    private var userEmail = ""
+    private lateinit var userName: TextView
+    private lateinit var userPic: CircleImageView
+    private lateinit var navigationView: NavigationView
     private var fragmentMain = androidx.fragment.app.Fragment()
-    lateinit var intent1:Intent
-    lateinit var menuIntent:Intent
+    private lateinit var intent1:Intent
+    private lateinit var menuIntent:Intent
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,9 +105,9 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_settings -> true
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -150,7 +150,7 @@ class UserProfileActivity : AppCompatActivity(), NavigationView.OnNavigationItem
     }
 
 
-    fun setFragment(f: androidx.fragment.app.Fragment) {
+    private fun setFragment(f: androidx.fragment.app.Fragment) {
 
         val fm: androidx.fragment.app.FragmentManager = supportFragmentManager
         val ft: androidx.fragment.app.FragmentTransaction = fm.beginTransaction()

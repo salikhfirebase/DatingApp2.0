@@ -1,6 +1,7 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,6 @@ import com.neobuchaemyj.datingapp.R
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -20,8 +19,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class PolicyFragment : Fragment() {
 
-    lateinit var webView: WebView
+    private lateinit var webView: WebView
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

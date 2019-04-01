@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
 import android.annotation.SuppressLint
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import com.neobuchaemyj.datingapp.R
 import io.reactivex.Completable
@@ -19,9 +19,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -30,20 +27,20 @@ private const val ARG_PARAM2 = "param2"
 class SingleOrCoupleFragment : Fragment() {
 
     private var fragmentMain = androidx.fragment.app.Fragment()
-    lateinit var radioGroup: RadioGroup
-    lateinit var radioButton: RadioButton
-    lateinit var checkedHaveHouse: TextView
-    lateinit var checkedHaveCar: TextView
-    lateinit var checkedHaveMoto: TextView
-    lateinit var makeClear: EditText
-    lateinit var nextButton: Button
-    lateinit var checkedRadioText: String
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var radioButton: RadioButton
+    private lateinit var checkedHaveHouse: TextView
+    private lateinit var checkedHaveCar: TextView
+    private lateinit var checkedHaveMoto: TextView
+    private lateinit var makeClear: EditText
+    private lateinit var nextButton: Button
+    private lateinit var checkedRadioText: String
     lateinit var db: AppDatabase
-    var otherData = ""
-    var houseCheked = ""
-    var carCheked = ""
-    var motoCheked = ""
-    var userId = 0
+    private var otherData = ""
+    private var houseChecked = ""
+    private var carChecked = ""
+    private var mohoChecked = ""
+    private var userId = 0
     var user = User()
 
     @SuppressLint("CheckResult")
@@ -74,7 +71,7 @@ class SingleOrCoupleFragment : Fragment() {
         nextButton.setOnClickListener {
             radioButton = view.findViewById(radioGroup.checkedRadioButtonId)
             checkedRadioText = radioButton.text.toString()
-            otherData = houseCheked + carCheked + motoCheked
+            otherData = houseChecked + carChecked + mohoChecked
             userSet()
             if (userId != 0) {
                 saveToDb()
@@ -86,7 +83,7 @@ class SingleOrCoupleFragment : Fragment() {
         }
 
             checkedHaveHouse.setOnClickListener {
-                houseCheked = if (houseCheked == "") {
+                houseChecked = if (houseChecked == "") {
                     it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveHouse.text.toString() + ";"
                 } else {
@@ -95,7 +92,7 @@ class SingleOrCoupleFragment : Fragment() {
                 }
             }
             checkedHaveCar.setOnClickListener {
-                carCheked = if (carCheked == "") {
+                carChecked = if (carChecked == "") {
                     checkedHaveCar.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveCar.text.toString() + ";"
                 } else {
@@ -105,7 +102,7 @@ class SingleOrCoupleFragment : Fragment() {
             }
 
             checkedHaveMoto.setOnClickListener {
-                motoCheked = if (motoCheked == "") {
+                mohoChecked = if (mohoChecked == "") {
                     it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                     checkedHaveMoto.text.toString() + ";"
                 } else {
@@ -149,7 +146,7 @@ class SingleOrCoupleFragment : Fragment() {
     }
 
 
-    fun setFragment(f: androidx.fragment.app.Fragment) {
+    private fun setFragment(f: androidx.fragment.app.Fragment) {
 
         val fm: androidx.fragment.app.FragmentManager = this.requireActivity().supportFragmentManager
         val ft: androidx.fragment.app.FragmentTransaction = fm.beginTransaction()

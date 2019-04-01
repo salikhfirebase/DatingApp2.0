@@ -2,9 +2,9 @@ package com.neobuchaemyj.datingapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.neobuchaemyj.datingapp.Fragments.MainInfoFragment
-import com.neobuchaemyj.datingapp.Fragments.RegistrationFragment
-import com.neobuchaemyj.datingapp.Fragments.SigInFragment
+import com.neobuchaemyj.datingapp.fragments.MainInfoFragment
+import com.neobuchaemyj.datingapp.fragments.RegistrationFragment
+import com.neobuchaemyj.datingapp.fragments.SigInFragment
 
 class QuestionnaireActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class QuestionnaireActivity : AppCompatActivity() {
         setFragment(fragmentMain)
     }
 
-    fun setFragment(f: androidx.fragment.app.Fragment) {
+    private fun setFragment(f: androidx.fragment.app.Fragment) {
 
         val fm: androidx.fragment.app.FragmentManager = supportFragmentManager
         val ft: androidx.fragment.app.FragmentTransaction = fm.beginTransaction()

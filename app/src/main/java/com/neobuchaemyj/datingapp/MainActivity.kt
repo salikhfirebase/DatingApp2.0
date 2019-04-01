@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
@@ -15,7 +13,7 @@ import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.facebook.login.widget.LoginButton
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import com.yandex.metrica.YandexMetrica
 import com.yandex.metrica.YandexMetricaConfig
@@ -26,13 +24,12 @@ import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var facebookLogin: LoginButton
+    private lateinit var facebookLogin: LoginButton
 
-    lateinit var textView: TextView
 
-    lateinit var callbackManager: CallbackManager
+    private lateinit var callbackManager: CallbackManager
 
-    lateinit var intent1:Intent
+    private lateinit var intent1:Intent
     private var user = User()
     private lateinit var db: AppDatabase
     var userEmail: String = "didn't get"
@@ -49,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         facebookLogin = findViewById(R.id.facebook_login_button)
 
         facebookLogin.setReadPermissions("email")
-        var config = YandexMetricaConfig.newConfigBuilder("f15bb487-b8dd-4c68-af75-1a5f379d5e03").build()
+        val config = YandexMetricaConfig.newConfigBuilder("02c94e20-5d01-4b57-814a-aac3480ce940").build()
         YandexMetrica.activate(this, config)
         YandexMetrica.enableActivityAutoTracking(this.application)
 
@@ -84,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getUserEmail(token: AccessToken) {
 
-        var request: GraphRequest = GraphRequest.newMeRequest(
+        val request: GraphRequest = GraphRequest.newMeRequest(
             token
         ) { `object`, response ->
             Log.v("MainActivity", response.toString())
@@ -94,13 +91,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var parameters = Bundle()
+        val parameters = Bundle()
         parameters.putString("fields", "email")
         request.parameters = parameters
         request.executeAsync()
     }
 
-    fun onCreateAccButtonClick(v:View) {
+    fun onCreateAccButtonClick() {
 
         intent1 = Intent(this, QuestionnaireActivity::class.java)
         intent1.putExtra("action", "registration")
@@ -148,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun onSignInButtonClick(v: View) {
+    fun onSignInButtonClick() {
         intent1 = Intent(this, QuestionnaireActivity::class.java)
         intent1.putExtra("action", "sign_in")
         startActivity(intent1)

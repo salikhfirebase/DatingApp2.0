@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
 import android.annotation.SuppressLint
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import com.neobuchaemyj.datingapp.R
 import com.neobuchaemyj.datingapp.TakePictureActivity
@@ -21,8 +21,6 @@ import io.reactivex.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -30,15 +28,15 @@ private const val ARG_PARAM2 = "param2"
  */
 class LastRegFragment : Fragment() {
 
-    lateinit var checkedRadioText: String
-    lateinit var radioGroup: RadioGroup
-    lateinit var radioButton: RadioButton
+    private lateinit var checkedRadioText: String
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var radioButton: RadioButton
     lateinit var db: AppDatabase
-    lateinit var nextButton: Button
-    lateinit var agreeCheckBox: CheckBox
+    private lateinit var nextButton: Button
+    private lateinit var agreeCheckBox: CheckBox
     var user = User()
-    var userId = 0
-    lateinit var intent1: Intent
+    private var userId = 0
+    private lateinit var intent1: Intent
 
     @SuppressLint("CheckResult")
     override fun onCreateView(
@@ -46,7 +44,7 @@ class LastRegFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_last_reg, container, false)
+        val view = inflater.inflate(R.layout.fragment_last_reg, container, false)
 
         radioGroup = view.findViewById(R.id.radioGroupLasPage)
         db = AppDatabase.getInstance(this.requireContext()) as AppDatabase

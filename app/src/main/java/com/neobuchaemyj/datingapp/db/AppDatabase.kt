@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.DB
+package com.neobuchaemyj.datingapp.db
 
 import android.content.Context
 import androidx.room.Database

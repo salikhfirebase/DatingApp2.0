@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.DB
+package com.neobuchaemyj.datingapp.db
 
 import androidx.room.*
 import com.neobuchaemyj.datingapp.Model.User

@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
 import android.annotation.SuppressLint
@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.R
 import com.neobuchaemyj.datingapp.UserProfileActivity
 import io.reactivex.Observable
@@ -20,8 +20,6 @@ import io.reactivex.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -30,25 +28,25 @@ private const val ARG_PARAM2 = "param2"
 class SigInFragment : Fragment() {
 
     private lateinit var db: AppDatabase
-    private lateinit var email_edit_text: EditText
-    private lateinit var pass_edit_text: EditText
-    private lateinit var log_in_button: Button
-    lateinit var intent1: Intent
+    private lateinit var emailEditText: EditText
+    private lateinit var passEditText: EditText
+    private lateinit var logInButton: Button
+    private lateinit var intent1: Intent
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_sig_in, container, false)
+        val view = inflater.inflate(R.layout.fragment_sig_in, container, false)
 
         db = AppDatabase.getInstance(this.requireContext()) as AppDatabase
-        email_edit_text = view.findViewById(R.id.sign_in_email_edit_text)
-        pass_edit_text = view.findViewById(R.id.sign_in_pass_edit_text)
-        log_in_button = view.findViewById(R.id.sign_in_button)
+        emailEditText = view.findViewById(R.id.sign_in_email_edit_text)
+        passEditText = view.findViewById(R.id.sign_in_pass_edit_text)
+        logInButton = view.findViewById(R.id.sign_in_button)
 
-        log_in_button.setOnClickListener {
-            isUserInDb(email_edit_text.text.toString(), pass_edit_text.text.toString())
+        logInButton.setOnClickListener {
+            isUserInDb(emailEditText.text.toString(), passEditText.text.toString())
         }
 
         return view

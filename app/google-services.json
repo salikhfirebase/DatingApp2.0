@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "662479569173",
-    "firebase_url": "https://datingapp-d4dbe.firebaseio.com",
-    "project_id": "datingapp-d4dbe",
-    "storage_bucket": "datingapp-d4dbe.appspot.com"
+    "project_number": "174901896331",
+    "firebase_url": "https://datingappfixed.firebaseio.com",
+    "project_id": "datingappfixed",
+    "storage_bucket": "datingappfixed.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:662479569173:android:2aa014a6781208e1",
+        "mobilesdk_app_id": "1:174901896331:android:2aa014a6781208e1",
         "android_client_info": {
           "package_name": "com.neobuchaemyj.datingapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "662479569173-qhc91a5drvf7kfcv3kfafro8vjb319ut.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.neobuchaemyj.datingapp",
-            "certificate_hash": "bfcc2e6500953c4be0fc0049ff09640e5d592a36"
-          }
-        },
-        {
-          "client_id": "662479569173-2v3vh5sio4ngimf1p12tpsce3ch3fpmg.apps.googleusercontent.com",
+          "client_id": "174901896331-123rhie343ii1vsbdn4jq5c38o43ne5t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD5o4nWlBNurKmOEIEzIbrbX02BMmh2QCI"
+          "current_key": "AIzaSyDScnQfc9k20RrIffNoANq8gXU17vIIJyo"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "662479569173-2v3vh5sio4ngimf1p12tpsce3ch3fpmg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

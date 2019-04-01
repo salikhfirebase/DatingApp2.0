@@ -39,7 +39,7 @@ class ChooseAgeActivity : BaseActivity() {
             }
 
             when (sp) {
-                "меньше 25" -> {
+                "Меньше 25" -> {
                     intent1.putExtra(EXTRA_TASK_URL, taskUrl25)
                     startActivity(intent1)
                 }
@@ -47,7 +47,7 @@ class ChooseAgeActivity : BaseActivity() {
                     intent1.putExtra(EXTRA_TASK_URL, taskUrl2529)
                     startActivity(intent1)
                 }
-                "больше 30" -> {
+                "Больше 30" -> {
                     intent1.putExtra(EXTRA_TASK_URL, taskUrl30)
                     startActivity(intent1)
                 }
@@ -58,8 +58,8 @@ class ChooseAgeActivity : BaseActivity() {
 
                 when (radioButton.text.toString()) {
 
-                    "меньше 25" -> {
-                        mEditor.putString(APP_REFERENCES_AGE, "меньше 25")
+                    "Меньше 25" -> {
+                        mEditor.putString(APP_REFERENCES_AGE, "Меньше 25")
                         mEditor.apply()
                         intent1.putExtra(EXTRA_TASK_URL, taskUrl25)
                         startActivity(intent1)
@@ -70,8 +70,8 @@ class ChooseAgeActivity : BaseActivity() {
                         intent1.putExtra(EXTRA_TASK_URL, taskUrl2529)
                         startActivity(intent1)
                     }
-                    "больше 30" -> {
-                        mEditor.putString(APP_REFERENCES_AGE, "больше 30")
+                    "Больше 30" -> {
+                        mEditor.putString(APP_REFERENCES_AGE, "Больше 30")
                         mEditor.apply()
                         intent1.putExtra(EXTRA_TASK_URL, taskUrl30)
                         startActivity(intent1)

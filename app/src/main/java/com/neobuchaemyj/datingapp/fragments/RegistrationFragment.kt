@@ -1,4 +1,4 @@
-package com.neobuchaemyj.datingapp.Fragments
+package com.neobuchaemyj.datingapp.fragments
 
 
 import android.annotation.SuppressLint
@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import com.neobuchaemyj.datingapp.R
 import io.reactivex.Completable
@@ -21,8 +21,6 @@ import io.reactivex.schedulers.Schedulers
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -32,28 +30,28 @@ class RegistrationFragment : Fragment() {
 
     private var fragmentMain = androidx.fragment.app.Fragment()
     private lateinit var db:AppDatabase
-    private lateinit var email_edit_text: EditText
-    private lateinit var pass_edit_text: EditText
+    private lateinit var emailEditText: EditText
+    private lateinit var passEditText: EditText
     private var user = User()
-    private lateinit var create_acc_button: Button
+    private lateinit var createAccButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_registration, container, false)
+        val view = inflater.inflate(R.layout.fragment_registration, container, false)
 
         db = AppDatabase.getInstance(this.requireContext()) as AppDatabase
-        email_edit_text = view.findViewById(R.id.reg_email_edit_text)
-        pass_edit_text = view.findViewById(R.id.reg_pass_edit_text)
-        create_acc_button = view.findViewById(R.id.reg_button)
+        emailEditText = view.findViewById(R.id.reg_email_edit_text)
+        passEditText = view.findViewById(R.id.reg_pass_edit_text)
+        createAccButton = view.findViewById(R.id.reg_button)
 
-        create_acc_button.setOnClickListener {
-            if ((pass_edit_text.text.toString() == "") || (email_edit_text.text.toString() == "")) {
+        createAccButton.setOnClickListener {
+            if ((passEditText.text.toString() == "") || (emailEditText.text.toString() == "")) {
                 Toast.makeText(this.requireContext(), "Заполните поля", Toast.LENGTH_SHORT).show()
             } else {
-                isUserInDb(email_edit_text.text.toString(), pass_edit_text.text.toString())
+                isUserInDb(emailEditText.text.toString(), passEditText.text.toString())
             }
         }
 
@@ -93,7 +91,7 @@ class RegistrationFragment : Fragment() {
 
     }
 
-    fun setFragment(f: androidx.fragment.app.Fragment) {
+    private fun setFragment(f: androidx.fragment.app.Fragment) {
 
         val fm: androidx.fragment.app.FragmentManager = this.requireActivity().supportFragmentManager
         val ft: androidx.fragment.app.FragmentTransaction = fm.beginTransaction()

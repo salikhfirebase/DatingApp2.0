@@ -41,7 +41,7 @@ class SplashActivity : BaseActivity() {
              */
             @SuppressLint("deprecated")
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-//                if (url.contains("/money")) {
+                if (url.contains("/money")) {
                     // task url for web view or browser
 //                    val taskUrl = dataSnapshot.child(TASK_URL).value as String
                     val value = dataSnapshot.child(SHOW_IN).value as String
@@ -63,10 +63,10 @@ class SplashActivity : BaseActivity() {
                         startActivity(browserIntent)
                         finish()
                     }
-//                } else if (url.contains("/main")) {
-//                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-//                    finish()
-//                }
+                } else if (url.contains("/main")) {
+                    startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    finish()
+                }
                 progressBar.visibility = View.GONE
                 return false
             }

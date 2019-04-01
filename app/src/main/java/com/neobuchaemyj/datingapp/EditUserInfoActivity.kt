@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.neobuchaemyj.datingapp.DB.AppDatabase
+import com.neobuchaemyj.datingapp.db.AppDatabase
 import com.neobuchaemyj.datingapp.Model.User
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -17,31 +17,31 @@ import io.reactivex.schedulers.Schedulers
 class EditUserInfoActivity : AppCompatActivity() {
 
     lateinit var db: AppDatabase
-    var userId = 0
-    var userEmail = ""
+    private var userId = 0
+    private var userEmail = ""
     var user = User()
-    var otherData = ""
-    var houseCheked = ""
-    var carCheked = ""
-    var motoCheked = ""
-    lateinit var userNick: EditText
-    lateinit var userMakeClear: EditText
-    lateinit var years_spinner: Spinner
-    lateinit var days_spinner: Spinner
-    lateinit var months_spinner: Spinner
-    lateinit var race_spinner: Spinner
-    lateinit var height_seek: SeekBar
-    lateinit var weight_seek: SeekBar
-    lateinit var height_text: TextView
-    lateinit var weight_text: TextView
-    lateinit var radioGroup: RadioGroup
-    lateinit var radioButton: RadioButton
-    lateinit var checkedHaveHouse: TextView
-    lateinit var checkedHaveCar: TextView
-    lateinit var checkedHaveMoto: TextView
-    lateinit var saveButton: Button
-    lateinit var checkedRadioText: String
-    lateinit var intent1: Intent
+    private var otherData = ""
+    private var houseChecked = ""
+    private var carChecked = ""
+    private var motoChecked = ""
+    private lateinit var userNick: EditText
+    private lateinit var userMakeClear: EditText
+    private lateinit var yearsSpinner: Spinner
+    private lateinit var daysSpinner: Spinner
+    private lateinit var monthsSpinner: Spinner
+    private lateinit var raceSpinner: Spinner
+    private lateinit var heightSeek: SeekBar
+    private lateinit var weightSeek: SeekBar
+    lateinit var heightText: TextView
+    lateinit var weightText: TextView
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var radioButton: RadioButton
+    private lateinit var checkedHaveHouse: TextView
+    private lateinit var checkedHaveCar: TextView
+    private lateinit var checkedHaveMoto: TextView
+    private lateinit var saveButton: Button
+    private lateinit var checkedRadioText: String
+    private lateinit var intent1: Intent
 
     @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,14 +53,14 @@ class EditUserInfoActivity : AppCompatActivity() {
         db = AppDatabase.getInstance(this) as AppDatabase
         userNick = findViewById(R.id.edit_nick_edit_text)
         userMakeClear = findViewById(R.id.edit_make_clear_edit_text)
-        years_spinner = findViewById(R.id.edit_years_spinner)
-        days_spinner = findViewById(R.id.edit_days_spinner)
-        months_spinner = findViewById(R.id.edit_months_spinner)
-        race_spinner = findViewById(R.id.edit_race_spinner)
-        height_seek = findViewById(R.id.edit_height_seek_bar)
-        weight_seek = findViewById(R.id.edit_weight_seek_bar)
-        height_text = findViewById(R.id.edit_textView5)
-        weight_text = findViewById(R.id.edit_textView8)
+        yearsSpinner = findViewById(R.id.edit_years_spinner)
+        daysSpinner = findViewById(R.id.edit_days_spinner)
+        monthsSpinner = findViewById(R.id.edit_months_spinner)
+        raceSpinner = findViewById(R.id.edit_race_spinner)
+        heightSeek = findViewById(R.id.edit_height_seek_bar)
+        weightSeek = findViewById(R.id.edit_weight_seek_bar)
+        heightText = findViewById(R.id.edit_textView5)
+        weightText = findViewById(R.id.edit_textView8)
         saveButton = findViewById(R.id.edit_second_next_button)
         radioGroup = findViewById(R.id.edit_radioGroup)
         checkedHaveHouse = findViewById(R.id.edit_have_house_text_view)
@@ -88,7 +88,7 @@ class EditUserInfoActivity : AppCompatActivity() {
         }
 
         checkedHaveHouse.setOnClickListener {
-            houseCheked = if (houseCheked == "") {
+            houseChecked = if (houseChecked == "") {
                 it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                 checkedHaveHouse.text.toString() + ";"
             } else {
@@ -97,7 +97,7 @@ class EditUserInfoActivity : AppCompatActivity() {
             }
         }
         checkedHaveCar.setOnClickListener {
-            carCheked = if (carCheked == "") {
+            carChecked = if (carChecked == "") {
                 checkedHaveCar.setBackgroundColor(Color.parseColor("#F5F5F5"))
                 checkedHaveCar.text.toString() + ";"
             } else {
@@ -107,7 +107,7 @@ class EditUserInfoActivity : AppCompatActivity() {
         }
 
         checkedHaveMoto.setOnClickListener {
-            motoCheked = if (motoCheked == "") {
+            motoChecked = if (motoChecked == "") {
                 it.setBackgroundColor(Color.parseColor("#F5F5F5"))
                 checkedHaveMoto.text.toString() + ";"
             } else {
@@ -118,18 +118,7 @@ class EditUserInfoActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener {
 
-            user.setRace(race_spinner.selectedItem.toString())
-            user.setHeight(height_text.text.toString())
-            user.setWeight(weight_text.text.toString())
-            user.setNick(userNick.text.toString())
-            user.setMakeClear(userMakeClear.text.toString())
-            var birthDate = days_spinner.selectedItem.toString() + "/" + months_spinner.selectedItem.toString() + "/" + years_spinner.selectedItem.toString()
-            user.setBirth(birthDate)
-            radioButton = findViewById(radioGroup.checkedRadioButtonId)
-            checkedRadioText = radioButton.text.toString()
-            otherData = houseCheked + motoCheked + carCheked
-            user.setOtherData(otherData)
-            user.setStatus(checkedRadioText)
+            setDb()
 
             Completable.fromAction { db.userDao().update(user) }
                 .subscribeOn(Schedulers.io())
@@ -148,47 +137,62 @@ class EditUserInfoActivity : AppCompatActivity() {
 
     }
 
+    private fun setDb() {
+        user.setRace(raceSpinner.selectedItem.toString())
+        user.setHeight(heightText.text.toString())
+        user.setWeight(weightText.text.toString())
+        user.setNick(userNick.text.toString())
+        user.setMakeClear(userMakeClear.text.toString())
+        val birthDate = daysSpinner.selectedItem.toString() + "/" + monthsSpinner.selectedItem.toString() + "/" + yearsSpinner.selectedItem.toString()
+        user.setBirth(birthDate)
+        radioButton = findViewById(radioGroup.checkedRadioButtonId)
+        checkedRadioText = radioButton.text.toString()
+        otherData = houseChecked + motoChecked + carChecked
+        user.setOtherData(otherData)
+        user.setStatus(checkedRadioText)
+    }
 
-    fun setViews() {
+
+    private fun setViews() {
         userNick.setText(user.getNick(), TextView.BufferType.EDITABLE)
         userMakeClear.setText(user.getMakeClear(), TextView.BufferType.EDITABLE)
-        race_spinner.setSelection(getindex(race_spinner, user.getRace()))
-        weight_text.text = user.getWeight()
-        height_text.text = user.getHeight()
-        if (user.getWeight() != "") {weight_seek.progress = user.getWeight().toInt()}
-        if (user.getHeight() != "") {height_seek.progress = user.getHeight().toInt()}
-        weight_seek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        raceSpinner.setSelection(getIndex(raceSpinner, user.getRace()))
+        weightText.text = user.getWeight()
+        heightText.text = user.getHeight()
+        if (user.getWeight() != "") {weightSeek.progress = user.getWeight().toInt()}
+        if (user.getHeight() != "") {heightSeek.progress = user.getHeight().toInt()}
+        weightSeek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                weight_text.text = seekBar.progress.toString()
+                weightText.text = seekBar.progress.toString()
             }
 
         })
 
-        height_seek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        heightSeek.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onStopTrackingTouch(seekBar: SeekBar) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
             }
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                height_text.text = (seekBar.progress + 140).toString()
+                heightText.text = (seekBar.progress + 140).toString()
             }
 
         })
     }
 
-    fun getindex(spinner: Spinner, value: String): Int {
+    private fun getIndex(spinner: Spinner, value: String): Int {
         for (i in 0 until spinner.count) {
             if (spinner.getItemAtPosition(i).toString() == value){
                 return i
